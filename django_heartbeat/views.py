@@ -18,6 +18,11 @@ class HeartBeatView(generics.GenericAPIView):
             cache_get = cache.get('test')
             if cache_get != 1:
                 raise ValueError
+
+            request.session['test_value'] = 1
+            request.session.save()
+
+            assert request.session["test_value"] == 1
         except Exception:
             logger.exception("Heartbeat Exception")
             output_status = status.HTTP_500_INTERNAL_SERVER_ERROR
