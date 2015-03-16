@@ -7,7 +7,7 @@ import logging
 import pkg_resources
 
 try:
-    __version__ = pkg_resources.get_distribution("app.releaser").version
+    __version__ = pkg_resources.get_distribution("zest.releaser").version
 except:
     __version__ = None
 
