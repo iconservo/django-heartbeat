@@ -4,6 +4,13 @@ from django.contrib.auth.models import Permission
 from django.core.cache import cache
 import logging
 
+import pkg_resources
+
+try:
+    __version__ = pkg_resources.get_distribution("app.releaser").version
+except:
+    __version__ = None
+
 logger = logging.getLogger("django.heartbeat")
 
 class HeartBeatView(generics.GenericAPIView):
@@ -28,4 +35,8 @@ class HeartBeatView(generics.GenericAPIView):
             output_status = status.HTTP_500_INTERNAL_SERVER_ERROR
             res = 'failed'
 
-        return Response({'heartbeat': res }, status = output_status)
+        output_data = {}
+        output_data['heartbeat'] = res
+        output_data['ver'] = __version__
+
+        return Response(output_data, status = output_status)
