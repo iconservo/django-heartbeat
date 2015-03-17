@@ -2,14 +2,8 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from django.contrib.auth.models import Permission
 from django.core.cache import cache
+from django.conf import settings
 import logging
-
-import pkg_resources
-
-try:
-    __version__ = pkg_resources.get_distribution("zest.releaser").version
-except:
-    __version__ = None
 
 logger = logging.getLogger("django.heartbeat")
 
@@ -17,6 +11,8 @@ class HeartBeatView(generics.GenericAPIView):
     permission_classes = (permissions.AllowAny,)
 
     def get(self, request, format=None):
+        output_data = {}
+
         output_status = status.HTTP_200_OK
         res = 'ok'
         try:
@@ -30,13 +26,17 @@ class HeartBeatView(generics.GenericAPIView):
             request.session.save()
 
             assert request.session["test_value"] == 1
+
+            extra_values = getattr(settings, "HEARTBEAT_OUTPUT", None)
+            if extra_values:
+                for k, v in extra_values.iteritems():
+                    output_data[k] = v()
+
         except Exception:
             logger.exception("Heartbeat Exception")
             output_status = status.HTTP_500_INTERNAL_SERVER_ERROR
             res = 'failed'
 
-        output_data = {}
         output_data['heartbeat'] = res
-        output_data['ver'] = __version__
 
         return Response(output_data, status = output_status)
