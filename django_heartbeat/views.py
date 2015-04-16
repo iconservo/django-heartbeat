@@ -40,3 +40,15 @@ class HeartBeatView(generics.GenericAPIView):
         output_data['heartbeat'] = res
 
         return Response(output_data, status = output_status)
+
+
+class StaticHeartbeatView(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request, format=None):
+        output_data = {}
+
+        output_status = status.HTTP_200_OK
+        output_data['heartbeat'] = 'ok'
+
+        return Response(output_data, status = output_status)
