@@ -38,7 +38,7 @@ class HeartBeatView(generics.GenericAPIView):
 
         output_data['heartbeat'] = res
 
-        return Response(output_data, status = output_status)
+        return Response(data=output_data, status=output_status)
 
 
 class StaticHeartbeatView(generics.GenericAPIView):

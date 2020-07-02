@@ -22,3 +22,4 @@ class HeartbeatTest(TestCase):
     def test_heartbeat_output(self):
         response = self.client.get('/heartbeat/')
         self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.data, dict)
