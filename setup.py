@@ -1,9 +1,10 @@
 from distutils.core import setup
+from setuptools import find_namespace_packages
 
 setup(
     name='django-heartbeat',
     version='0.0.1',
-    packages=['django_heartbeat'],
+    packages=find_namespace_packages(),
     url='https://bitbucket.org/redfunction/django-heartbeat',
     license='MIT',
     author='Margus Laak',
