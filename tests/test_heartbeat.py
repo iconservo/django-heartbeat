@@ -6,6 +6,8 @@ CACHES_DISABLED = {
     }
 }
 
+HEARTBEAT_OUTPUT_SAMPLE = {'foo': 'bar'}
+
 class HeartbeatTest(TestCase):
     def test_heartbeat_ok(self):
         response = self.client.get('/heartbeat/')
@@ -15,3 +17,8 @@ class HeartbeatTest(TestCase):
     def test_heartbeat_failed(self):
         response = self.client.get('/heartbeat/')
         self.assertEqual(response.status_code, 500)
+
+    @override_settings(HEARTBEAT_OUTPUT=HEARTBEAT_OUTPUT_SAMPLE)
+    def test_heartbeat_output(self):
+        response = self.client.get('/heartbeat/')
+        self.assertEqual(response.status_code, 200)
