@@ -15,8 +15,7 @@ before_install:
   - lsb_release -a
 
 install:
-  - pip install -r requirements.txt
-  - pip install tox
+  - pip install -r requirements-dev.txt
   - pip freeze
 
 script:
