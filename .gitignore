@@ -1,2 +1,5 @@
 .tox
 .pytest_cache
+.idea/
+__pycache__
+MANIFEST
