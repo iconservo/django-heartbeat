@@ -29,8 +29,7 @@ class HeartBeatView(generics.GenericAPIView):
 
             extra_values = getattr(settings, "HEARTBEAT_OUTPUT", None)
             if extra_values:
-                for k, v in extra_values.iteritems():
-                    output_data[k] = v()
+                output_data.update(extra_values)
 
         except Exception:
             logger.exception("Heartbeat Exception")
