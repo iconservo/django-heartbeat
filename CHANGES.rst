@@ -1,4 +1,4 @@
-0.1.1 (unreleased)
+0.1.1 (2020-07-02)
 ==================
 
 - Add support for Python 3.7
