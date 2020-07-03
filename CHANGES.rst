@@ -1,7 +1,11 @@
 0.1.1 (unreleased)
 ==================
 
-- Nothing changed yet.
+- Add support for Python 3.7
+- Add support for Django 2.2
+- Drop support for Python 2
+- Drop support for Django 1
+- Add unit testing and documentation
 
 
 0.1.0 (2020-07-02)
