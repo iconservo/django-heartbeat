@@ -1,16 +1,11 @@
 from django.test import TestCase, override_settings
-from django_heartbeat.settings import HEARTBEAT_OUTPUT
+import django_heartbeat
 
 CACHES_DISABLED = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
-
-HEARTBEAT_OK = {'heartbeat': 'ok'}
-HEARTBEAT_OK_AND_OUTPUT = {}
-HEARTBEAT_OK_AND_OUTPUT.update(HEARTBEAT_OK)
-HEARTBEAT_OK_AND_OUTPUT.update(HEARTBEAT_OUTPUT)
 
 class HeartbeatTest(TestCase):
     def test_heartbeat_ok(self):
@@ -23,7 +18,12 @@ class HeartbeatTest(TestCase):
         self.assertEqual(response.status_code, 500)
 
     def test_heartbeat_output(self):
+        heartbeat_ok = {'heartbeat': 'ok'}
+        heartbeat_output = {'ver': django_heartbeat.__version__}
+        heartbeat_ok_and_output = {}
+        heartbeat_ok_and_output.update(heartbeat_ok)
+        heartbeat_ok_and_output.update(heartbeat_output)
         response = self.client.get('/heartbeat/')
         self.assertEqual(response.status_code, 200)
         self.assertIsInstance(response.data, dict)
-        self.assertDictEqual(response.data, HEARTBEAT_OK_AND_OUTPUT)
+        self.assertDictEqual(response.data, heartbeat_ok_and_output)
