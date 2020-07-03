@@ -1,3 +1,9 @@
+0.0.2 (unreleased)
+==================
+
+- Nothing changed yet.
+
+
 Changelog (django-heartbeat)
 ============================
 
